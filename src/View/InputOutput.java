@@ -1,8 +1,10 @@
 package View;
+import Model.Spotify;
 
 import java.io.DataOutputStream;    
 import java.io.IOException;
-class InputOutput {
+
+public class InputOutput {
 
     //escrever int em bytes
     public void write(int value, DataOutputStream dos){

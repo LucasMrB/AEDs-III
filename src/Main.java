@@ -2,6 +2,7 @@ import View.*;
 import Presentation.*;
 import Model.*;
 
+import java.io.IOException;
 import java.util.LinkedList;
 
 public class Main {
@@ -11,12 +12,18 @@ public class Main {
 
         LinkedList<Spotify> spotify_list = new LinkedList<Spotify>();
 
-        list.forEach(data->{
+        list.forEach(data -> {
             String[] aux = ParseSpotify.parse(data);
-            spotify_list.add(new Spotify(aux[0],aux[1],aux[7],ParseSpotify.set_date(aux[8]),Integer.parseInt(aux[12]),aux[19]));
+            spotify_list.add(new Spotify(aux[0],aux[1],aux[3],ParseSpotify.set_date(aux[8]),Integer.parseInt(aux[12]),aux[19], Short.parseShort(aux[20])));
+
         });
 
-        spotify_list.forEach(data->System.out.println(data.getMusicName()));
+        try{
+            System.out.println(spotify_list.get(0).toByteArray().length);
+
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
         
 
     }

@@ -4,12 +4,14 @@ import java.util.Calendar;
 
 public class ParseSpotify {
 
+    private static short lastId = 1;
+
     // parse string -> vetor atributo
     public static String[] parse(String line){
         line = changeComma(line);
         String aux[] = line.split(",");
         aux = removeAspas(aux);
-        System.out.println(aux[0]);
+        aux[20] = String.valueOf(lastId++);
 
         return aux;
     }

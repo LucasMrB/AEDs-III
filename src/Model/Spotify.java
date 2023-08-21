@@ -1,9 +1,12 @@
 package Model;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.util.Calendar;
+import java.io.IOException;
 
 public class Spotify{
-    private static short id = 0; //chave primaria
+    public short id; //chave primaria
     private String track_uri;  // string fixa = 36
     private String music_name; // string flex   maior = 150
     private String singer;     // string var = maior = 80
@@ -15,13 +18,14 @@ public class Spotify{
     //CONSTRUTORES
     public Spotify(){}
 
-    public Spotify( String music_name, String singer, String album_artist_uri, Calendar date, int  track_duration, String artist_genres){
-        this.track_uri = album_artist_uri;
+    public Spotify( String track_uri, String music_name, String singer, Calendar date, int  track_duration, String artist_genres, Short id){
+        this.track_uri = track_uri;
         this.music_name = music_name;
         this.singer = singer;
         this.date = date;
         this.track_duration = track_duration;
         this.artist_genres = artist_genres;
+        this.id = id;
     }
 
     //gets
@@ -31,7 +35,7 @@ public class Spotify{
     public Calendar getDate(){return date;}
     public int getTrackDuration(){return track_duration;}
     public String getArtistGenres(){return artist_genres;}
-    public int getId(){return id;}
+    public int getId(){ return id;}
 
     //escrever dados do cantor
     public void write_data(){
@@ -44,4 +48,24 @@ public class Spotify{
         System.out.println(date.get(Calendar.DAY_OF_MONTH));
         System.out.println(date.get(Calendar.MONTH));
     }
+
+    public byte[] toByteArray() throws IOException{
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream(baos);
+
+        dos.writeShort(getId());
+        dos.writeUTF(getTrackUri());
+        dos.writeUTF(getMusicName()); 
+        dos.writeUTF(getSinger());
+        getDate();
+        dos.writeInt(Calendar.DAY_OF_MONTH);
+        dos.writeInt(Calendar.MONTH);
+        dos.writeInt(Calendar.YEAR);
+        dos.writeInt(getTrackDuration());
+        dos.writeUTF(getArtistGenres());
+
+        return baos.toByteArray();
+    }
+
 }
