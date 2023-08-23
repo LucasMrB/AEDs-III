@@ -1,6 +1,8 @@
 package Model;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.Calendar;
 import java.io.IOException;
@@ -49,23 +51,45 @@ public class Spotify{
         System.out.println(date.get(Calendar.MONTH));
     }
 
+    
+    // ORDEM: TAMANHO ARQUIVO || ID || NOME DA MUSICA || CANTOR || DATA || TRACK DURATION || GENERO MUSICAL || URI
+    
+    //transforma classe em array de bytes
     public byte[] toByteArray() throws IOException{
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
 
         dos.writeShort(getId());
-        dos.writeUTF(getTrackUri());
         dos.writeUTF(getMusicName()); 
         dos.writeUTF(getSinger());
         getDate();
-        dos.writeInt(Calendar.DAY_OF_MONTH);
-        dos.writeInt(Calendar.MONTH);
         dos.writeInt(Calendar.YEAR);
+        dos.writeInt(Calendar.MONTH);
+        dos.writeInt(Calendar.DAY_OF_MONTH);
         dos.writeInt(getTrackDuration());
         dos.writeUTF(getArtistGenres());
+        dos.writeUTF(getTrackUri());
 
         return baos.toByteArray();
+    }
+
+    //lê um array de bytes e salva no objeto da classe
+    public void fromByteArray(byte[] ba) throws IOException{
+
+        ByteArrayInputStream bais = new ByteArrayInputStream(ba);
+        DataInputStream dis = new DataInputStream(bais);
+
+        id = dis.readShort();
+        music_name = dis.readUTF();
+        singer = dis.readUTF();
+        date.set(Calendar.YEAR,dis.readInt());
+        date.set(Calendar.MONTH,dis.readInt());
+        date.set(Calendar.DAY_OF_MONTH,dis.readInt());
+        track_duration = dis.readInt();
+        artist_genres = dis.readUTF();
+        track_uri = dis.readUTF();
+
     }
 
 }

@@ -18,13 +18,11 @@ public class Main {
 
         });
 
-        try{
-            System.out.println(spotify_list.get(0).toByteArray().length);
-
-        }catch(IOException e){
-            System.out.println(e.getMessage());
-        }
         
-
-    }
+        try{
+            WriteReadArchive.WriteArchive(spotify_list);
+            Spotify tmp = new Spotify();
+            WriteReadArchive.ReadArchive(tmp);
+        }catch(Exception e){}
+    }  
 }
