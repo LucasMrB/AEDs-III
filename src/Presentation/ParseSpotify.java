@@ -1,6 +1,9 @@
 package Presentation;
 
-import java.util.Calendar;
+import Model.Data;
+
+//classe para auxiliar a classe Spotify
+
 
 public class ParseSpotify {
 
@@ -42,21 +45,26 @@ public class ParseSpotify {
     }
 
     //aux, setar data
-    public static Calendar set_date(String line){
-        Calendar date = Calendar.getInstance();
+    public static Data set_date(String line){
+        Data date;
         if(line.length() == 0){
-
+            // sem informação de data
+            date = new Data();
         }else if(line.length() == 4){
-            date.set(Calendar.YEAR, Integer.parseInt(line.substring(0, 4)));
+            // só ano
+            date = new Data(Integer.parseInt(line.substring(0, 4)));
         }else if(line.length()==7){
-            date.set(Calendar.YEAR, Integer.parseInt(line.substring(0, 4)));
-            date.set(Calendar.MONTH, Integer.parseInt(line.substring(5,7)));
+            // ano e mes
+            date = new Data(Integer.parseInt(line.substring(5,7)), Integer.parseInt(line.substring(0, 4)));
         }else{
-            date.set(Calendar.YEAR, Integer.parseInt(line.substring(0, 4)));
-            date.set(Calendar.MONTH, Integer.parseInt(line.substring(5,7)));
-            date.set(Calendar.DAY_OF_MONTH,Integer.parseInt(line.substring(8)));
+            // dia, mes e ano
+            date = new Data(Integer.parseInt(line.substring(8)), Integer.parseInt(line.substring(5,7)), Integer.parseInt(line.substring(0, 4)));
         }
         return date;
+    }
+
+    public static Data setDate(int ano, int mes, int dia){
+        return new Data(dia,mes,ano);
     }
 }
 
