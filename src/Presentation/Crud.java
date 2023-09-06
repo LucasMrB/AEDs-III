@@ -8,19 +8,17 @@ import Model.Spotify;
 import java.io.IOException;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.io.EOFException;
 
 public class Crud {
     // lapide = ' {.} ' arquivo valido || ' {.} ' arquivo nao valido
     private static RandomAccessFile raf; // atributo de classe, serve para movimentar o ponteiro 
     private static byte[] lapideValida = new byte[6];
     private static byte[] lapideNaoValida = new byte[6];
-    private static long final_arc;
 
     //inicializar o raf
     public Crud(){
-        lapideValida = toByteArray("{.}");
-        lapideNaoValida = toByteArray("{*}");
+        lapideValida = toByteArray("{.}");      //5 bytes   
+        lapideNaoValida = toByteArray("{*}");   //5 bytes
         try{
             raf = new RandomAccessFile("../archive/archive_crud", "rw");
         }catch(FileNotFoundException e){
@@ -75,8 +73,8 @@ public class Crud {
                 raf.write(lapideValida);
                 raf.write(date.toByteArray().length);
                 raf.write(date.toByteArray());
-
-
+            }else{
+                System.out.println("ID ja existente, faça update");
             }
         }catch(IOException e){
         }
@@ -147,10 +145,6 @@ public class Crud {
             auxClass.fromByteArray(aux2);
             auxClass.setSinger(nome);
             raf.seek(save);
-
-            System.out.println(aux2.length);
-            System.out.println(auxClass.toByteArray().length);
-
             if(auxClass.toByteArray().length <= aux2.length){
                 raf.writeInt(auxClass.toByteArray().length);
                 raf.write(auxClass.toByteArray());

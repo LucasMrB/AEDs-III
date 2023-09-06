@@ -47,6 +47,7 @@ public class Spotify{
     public void setDate(Data date){this.date = date;}
     public void setTrackDuration(int track_duration){this.track_duration = track_duration;}
     public void setArtistGenres(String artist_genres){this.artist_genres = artist_genres;}
+    public void setID(short id){this.id = id;}
 
 
     //escrever dados do cantor

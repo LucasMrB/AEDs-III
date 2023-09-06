@@ -1,12 +1,15 @@
 package Presentation;
 
+import java.io.IOException;
+
+import Model.Spotify;
 import Model.Data;
 
 //classe para auxiliar a classe Spotify
 
 
 public class ParseSpotify {
-
+    // statico, id sempre irá incrementar após ler uma nova linha(linha 20) lastID++
     private static short lastId = 1;
 
     // parse string -> vetor atributo
@@ -66,6 +69,26 @@ public class ParseSpotify {
     public static Data setDate(int ano, int mes, int dia){
         return new Data(dia,mes,ano);
     }
+
+    //BytetoSpotify
+    public static Spotify ByteToSpotify(byte vetor[]){
+        Spotify retorno = new Spotify();
+        try{
+            retorno.fromByteArray(vetor);
+        }catch(IOException e){
+            System.out.println("ERROR: byte to spotify");
+        }
+        return retorno;
+    }
+
+    //retorna o ultimo id criado
+    public static short getLastId(){
+        int a = (int)lastId;
+        a--;
+        return (short)a;
+        //Converter.ToInt16();
+    }
+
 }
 
 
