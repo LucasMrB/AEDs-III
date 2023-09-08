@@ -22,12 +22,14 @@ public class Main {
         Crud crud = new Crud();
         crud.create(spotify_list);
         short a = ParseSpotify.getLastId();
-
+        
         IntercalacaoBalanceadaC lucas = new IntercalacaoBalanceadaC();
         lucas.writeArchive_Distribuicao();
-        lucas.ordenacao_memsecundaria();
+        //lucas.ordenacao_memsecundaria();
+        lucas.intercalao();
         //lucas.teste();
         lucas.printArq3();
+        //lucas.printarq();
         
         try{
             ParseSpotify.ByteToSpotify(crud.read(a));//.write_data();

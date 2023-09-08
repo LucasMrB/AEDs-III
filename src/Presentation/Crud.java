@@ -156,6 +156,14 @@ public class Crud {
         }
 
     }
+
+    public static void get_last_id(){
+        try{
+            raf.seek(0);
+            System.out.println(raf.readShort());
+        }catch(IOException e){}
+
+    }
 }
     
 
